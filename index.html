@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operating System Questions & Answers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .mermaid { display: flex; justify-content: center; margin: 2rem 0; background-color: #fff; padding: 1rem; border-radius: 8px; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 p-6">
+
+    <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <header class="bg-blue-600 text-white p-6">
+            <h1 class="text-3xl font-bold">OS Questions & Answers</h1>
+            <p class="mt-2 text-blue-100">Compiled from Chapter 1 & 2 Sources</p>
+        </header>
+
+        <main class="p-6 space-y-12">
+
+            <!-- SET 01 -->
+            <section>
+                <h2 class="text-2xl font-bold text-blue-800 border-b-2 border-blue-200 pb-2 mb-4">Set 01</h2>
+                
+                <!-- Q1 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q1: Summarize and Illustrate Storage Hierarchy</h3>
+                    <p class="mb-4"><strong>Summary:</strong> Storage systems are organized in a hierarchy based on <span class="font-bold text-red-600">speed</span>, <span class="font-bold text-red-600">cost</span>, and <span class="font-bold text-red-600">volatility</span>. The higher levels (registers, cache) are faster, more expensive, and volatile. Lower levels (disks) are slower, cheaper, and non-volatile.</p>
+                    <div class="mermaid">
+                        graph BT
+                            subgraph H["Storage Hierarchy"]
+                                direction BT
+                                L7[Magnetic Tapes] --> L6[Optical Disk]
+                                L6 --> L5[Hard Disk]
+                                L5 --> L4[Solid State Disk]
+                                L4 --> L3[Main Memory]
+                                L3 --> L2[Cache]
+                                L2 --> L1[Registers]
+                            end
+                            
+                            style L1 fill:#ffebee,stroke:#c62828,stroke-width:2px
+                            style L2 fill:#ffcdd2,stroke:#c62828,stroke-width:2px
+                            style L3 fill:#ef9a9a,stroke:#c62828,stroke-width:2px
+                            style L4 fill:#90caf9,stroke:#1565c0,stroke-width:2px
+                            style L5 fill:#64b5f6,stroke:#1565c0,stroke-width:2px
+                            style L6 fill:#42a5f5,stroke:#1565c0,stroke-width:2px
+                            style L7 fill:#2196f3,stroke:#1565c0,stroke-width:2px
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-600 px-10">
+                        <span>⬇️ Increasing Size & Non-Volatility</span>
+                        <span>⬆️ Increasing Speed & Cost</span>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q2: Importance of Interrupts</h3>
+                    <p>Interrupts allow hardware or software to signal the CPU that an event needs immediate attention. This makes the OS <strong>"interrupt-driven,"</strong> allowing it to pause current tasks to handle critical events (like keyboard presses or errors) efficiently without constantly checking devices.</p>
+                </div>
+
+                <!-- Q3 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q3: Client-Server vs. Peer-to-Peer</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Client-Server:</strong> Centralized. Strict distinction between the machine requesting services (Client) and the machine providing them (Server).</li>
+                        <li><strong>Peer-to-Peer (P2P):</strong> Decentralized. No dedicated server. Every node is a "peer" and can act as both a client and a server simultaneously.</li>
+                    </ul>
+                </div>
+
+                <!-- Q4 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q4: System Calls for File Management</h3>
+                    <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                        <ul class="list-mono space-y-1 font-mono text-sm">
+                            <li>CreateFile() / open()</li>
+                            <li>ReadFile() / read()</li>
+                            <li>WriteFile() / write()</li>
+                            <li>CloseHandle() / close()</li>
+                            <li>DeleteFile() / unlink()</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SET 02 -->
+            <section>
+                <h2 class="text-2xl font-bold text-blue-800 border-b-2 border-blue-200 pb-2 mb-4">Set 02</h2>
+
+                <!-- Q1 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q1: Summarize and Illustrate Operating System Services</h3>
+                    <p class="mb-4"><strong>Summary:</strong> The OS provides services to the <strong>User</strong> (to make usage easy) and the <strong>System</strong> (for efficiency).</p>
+                    <div class="mermaid">
+                        graph TD
+                            A[User and other System Programs] --> B
+                            
+                            subgraph B[User Interfaces]
+                                direction LR
+                                B1(GUI)
+                                B2(Batch)
+                                B3(Command Line)
+                            end
+                            
+                            B --> C[System Calls]
+                            
+                            C --> D[Services]
+                            
+                            subgraph D[Services]
+                                direction TB
+                                subgraph D1[Helpful to the User]
+                                    D1_1[Program Execution]
+                                    D1_2[I/O Operations]
+                                    D1_3[File Systems]
+                                    D1_4[Communication]
+                                    D1_5[Error Detection]
+                                end
+                                subgraph D2[Ensuring Efficient Operation]
+                                    D2_1[Resource Allocation]
+                                    D2_2[Accounting]
+                                    D2_3[Protection and Security]
+                                end
+                            end
+                            
+                            D --> E[Operating System / Hardware]
+                            
+                            style A fill:#cfd8dc,stroke:#333
+                            style B fill:#e3f2fd,stroke:#1565c0
+                            style C fill:#fff3e0,stroke:#e65100
+                            style D fill:#e0f7fa,stroke:#00bcd4
+                            style E fill:#90a4ae,stroke:#455a64
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q2: Importance of Timesharing</h3>
+                    <p>Timesharing (multitasking) is vital for <strong>interactive computing</strong>. It switches the CPU between jobs so frequently that users can interact with each program while it runs. It ensures response times are short (< 1 second).</p>
+                </div>
+
+                <!-- Q3 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q3: Virtualization vs. Cloud Computing</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Virtualization:</strong> The technology that abstracts hardware to run multiple Guest OSes on a single Host OS (e.g., VMware).</li>
+                        <li><strong>Cloud Computing:</strong> The delivery model of computing, storage, and apps as a service over the Internet (e.g., AWS). It relies on virtualization.</li>
+                    </ul>
+                </div>
+
+                <!-- Q4 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q4: System Calls for Communications</h3>
+                    <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                        <ul class="list-mono space-y-1 font-mono text-sm">
+                            <li>CreatePipe() / pipe()</li>
+                            <li>CreateFileMapping() / shmget() (Shared Memory)</li>
+                            <li>MapViewOfFile() / mmap()</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SET 03 -->
+            <section>
+                <h2 class="text-2xl font-bold text-blue-800 border-b-2 border-blue-200 pb-2 mb-4">Set 03</h2>
+
+                <!-- Q1 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q1: Summarize and Illustrate Microkernel System Structure</h3>
+                    <p class="mb-4"><strong>Summary:</strong> Removes non-essential components from the kernel to user space. The kernel remains small (micro) and handles minimal process/memory management. Communication happens via <strong>message passing</strong>.</p>
+                    <div class="mermaid">
+                        graph TD
+                            subgraph UserMode ["User Mode"]
+                                direction LR
+                                App[Application<br>Program]
+                                FS[File<br>System]
+                                DD[Device<br>Driver]
+                            end
+
+                            subgraph Microkernel ["Kernel Mode (Microkernel)"]
+                                direction LR
+                                IPC[Interprocess<br>Communication]
+                                MM[Memory<br>Management]
+                                CPU[CPU<br>Scheduling]
+                            end
+                            
+                            subgraph Hardware
+                                HW[Hardware]
+                            end
+
+                            %% User Mode <--> Kernel (Message Passing)
+                            App <-->|messages| Microkernel
+                            FS <-->|messages| Microkernel
+                            DD <-->|messages| Microkernel
+                            
+                            %% Kernel <--> Hardware (Bi-directional)
+                            IPC <--> Hardware
+                            MM <--> Hardware
+                            CPU <--> Hardware
+
+                            style UserMode fill:#fff3e0,stroke:#e65100,stroke-width:2px
+                            style Microkernel fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+                            style Hardware fill:#cfd8dc,stroke:#455a64
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q2: Importance of Multiprocessors</h3>
+                    <p>They provide <strong>Increased Throughput</strong> (more work in less time), <strong>Economy of Scale</strong> (cheaper than multiple machines sharing peripherals), and <strong>Increased Reliability</strong> (graceful degradation if one CPU fails).</p>
+                </div>
+
+                <!-- Q3 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q3: SaaS vs. PaaS</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>SaaS (Software as a Service):</strong> Software available via Internet (e.g., Word, Gmail). You just use the app.</li>
+                        <li><strong>PaaS (Platform as a Service):</strong> Software stack ready for development via Internet (e.g., database server). You build apps on top of it.</li>
+                    </ul>
+                </div>
+
+                <!-- Q4 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-2">Q4: System Calls for Process Control</h3>
+                    <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                        <ul class="list-mono space-y-1 font-mono text-sm">
+                            <li>CreateProcess() / fork()</li>
+                            <li>ExitProcess() / exit()</li>
+                            <li>WaitForSingleObject() / wait()</li>
+                            <li>load(), execute(), abort()</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        <footer class="bg-gray-800 text-white text-center p-4 mt-6">
+            <p>&copy; 2025 Operating System Concepts</p>
+        </footer>
+    </div>
+
+</body>
+</html>
