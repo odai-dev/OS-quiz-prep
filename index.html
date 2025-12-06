@@ -23,7 +23,7 @@
         </header>
 
         <main class="p-6 space-y-12">
-
+            
             <!-- SET 01 -->
             <section>
                 <h2 class="text-2xl font-bold text-blue-800 border-b-2 border-blue-200 pb-2 mb-4">Set 01</h2>
@@ -31,7 +31,10 @@
                 <!-- Q1 -->
                 <div class="mb-8">
                     <h3 class="text-xl font-semibold mb-2">Q1: Summarize and Illustrate Storage Hierarchy</h3>
-                    <p class="mb-4"><strong>Summary:</strong> Storage systems are organized in a hierarchy based on <span class="font-bold text-red-600">speed</span>, <span class="font-bold text-red-600">cost</span>, and <span class="font-bold text-red-600">volatility</span>. The higher levels (registers, cache) are faster, more expensive, and volatile. Lower levels (disks) are slower, cheaper, and non-volatile.</p>
+                    <p class="mb-4">
+                        <strong>Summary:</strong> Storage systems are organized in a hierarchy defined by three key factors: <strong>speed</strong>, <strong>cost</strong>, and <strong>volatility</strong> (whether data is lost when power is removed).<br><br>
+                        The hierarchy moves data efficiently between fast, small, and volatile storage (<strong>CPU registers and cache</strong>) at the top, and slower, larger, and non-volatile bulk storage (<strong>hard disks and magnetic tapes</strong>) at the bottom. For a program to be processed, data must be transferred between these different levels.
+                    </p>
                     <div class="mermaid">
                         graph BT
                             subgraph H["Storage Hierarchy"]
@@ -95,52 +98,63 @@
                 <!-- Q1 -->
                 <div class="mb-8">
                     <h3 class="text-xl font-semibold mb-2">Q1: Summarize and Illustrate Operating System Services</h3>
-                    <p class="mb-4"><strong>Summary:</strong> The OS provides services to the <strong>User</strong> (to make usage easy) and the <strong>System</strong> (for efficiency).</p>
+                    <p class="mb-4">
+                        <strong>Summary:</strong> The operating system provides a comprehensive environment for program execution by offering two main categories of services:<br><br>
+                        <strong>1. Services Helpful to the User:</strong> These include making the system easier to use via the <strong>User Interface</strong> (GUI, Batch, CLI), and enabling basic functionality like <strong>Program Execution</strong>, <strong>I/O Operations</strong>, <strong>File Systems</strong> access, <strong>Communication</strong>, and <strong>Error Detection</strong>.<br><br>
+                        <strong>2. Services for Efficient System Operation:</strong> These manage internal resources, including <strong>Resource Allocation</strong>, <strong>Accounting</strong> (tracking usage), and ensuring <strong>Protection and Security</strong>.<br><br>
+                        All these services are accessed by user programs primarily through <strong>System Calls</strong>.
+                    </p>
                     <div class="mermaid">
                         graph TD
-                            A[User and other System Programs] --> B
+                            A[User and other System Programs] --- OS_Layer
                             
-                            subgraph B[User Interfaces]
-                                direction LR
-                                B1(GUI)
-                                B2(Batch)
-                                B3(Command Line)
+                            subgraph OS_Layer [Operating System Layer]
+                                subgraph B[User Interfaces]
+                                    direction LR
+                                    B1(GUI)
+                                    B2(Batch)
+                                    B3(Command Line)
+                                end
+                                
+                                C[System Calls]
+                                
+                                subgraph D[Services]
+                                    direction TB
+                                    subgraph D1[Helpful to the User]
+                                        D1_1[Program Execution]
+                                        D1_2[I/O Operations]
+                                        D1_3[File Systems]
+                                        D1_4[Communication]
+                                        D1_5[Error Detection]
+                                    end
+                                    subgraph D2[Ensuring Efficient Operation]
+                                        D2_1[Resource Allocation]
+                                        D2_2[Accounting]
+                                        D2_3[Protection and Security]
+                                    end
+                                end
+                                
+                                B --- C
+                                C --- D
                             end
                             
-                            B --> C[System Calls]
-                            
-                            C --> D[Services]
-                            
-                            subgraph D[Services]
-                                direction TB
-                                subgraph D1[Helpful to the User]
-                                    D1_1[Program Execution]
-                                    D1_2[I/O Operations]
-                                    D1_3[File Systems]
-                                    D1_4[Communication]
-                                    D1_5[Error Detection]
-                                end
-                                subgraph D2[Ensuring Efficient Operation]
-                                    D2_1[Resource Allocation]
-                                    D2_2[Accounting]
-                                    D2_3[Protection and Security]
-                                end
-                            end
-                            
-                            D --> E[Operating System / Hardware]
+                            D --- E[Hardware]
                             
                             style A fill:#cfd8dc,stroke:#333
-                            style B fill:#e3f2fd,stroke:#1565c0
+                            style B fill:#fff,stroke:#1565c0,stroke-dasharray: 5 5
                             style C fill:#fff3e0,stroke:#e65100
                             style D fill:#e0f7fa,stroke:#00bcd4
                             style E fill:#90a4ae,stroke:#455a64
+                            
+                            %% Style for the new parent box
+                            style OS_Layer fill:#bbdefb,stroke:#0d47a1,stroke-width:2px
                     </div>
                 </div>
 
                 <!-- Q2 -->
                 <div class="mb-8">
                     <h3 class="text-xl font-semibold mb-2">Q2: Importance of Timesharing</h3>
-                    <p>Timesharing (multitasking) is vital for <strong>interactive computing</strong>. It switches the CPU between jobs so frequently that users can interact with each program while it runs. It ensures response times are short (< 1 second).</p>
+                    <p>Timesharing (multitasking) is vital for <strong>interactive computing</strong>. It switches the CPU between jobs so frequently that users can interact with each program while it runs. It ensures response times are short (&lt; 1 second).</p>
                 </div>
 
                 <!-- Q3 -->
@@ -154,12 +168,14 @@
 
                 <!-- Q4 -->
                 <div class="mb-8">
-                    <h3 class="text-xl font-semibold mb-2">Q4: System Calls for Communications</h3>
+                    <h3 class="text-xl font-semibold mb-2">Q4: System Calls for File Management</h3>
                     <div class="bg-gray-50 p-4 rounded border border-gray-200">
                         <ul class="list-mono space-y-1 font-mono text-sm">
-                            <li>CreatePipe() / pipe()</li>
-                            <li>CreateFileMapping() / shmget() (Shared Memory)</li>
-                            <li>MapViewOfFile() / mmap()</li>
+                            <li>CreateFile() / open()</li>
+                            <li>ReadFile() / read()</li>
+                            <li>WriteFile() / write()</li>
+                            <li>CloseHandle() / close()</li>
+                            <li>DeleteFile() / unlink()</li>
                         </ul>
                     </div>
                 </div>
@@ -172,7 +188,9 @@
                 <!-- Q1 -->
                 <div class="mb-8">
                     <h3 class="text-xl font-semibold mb-2">Q1: Summarize and Illustrate Microkernel System Structure</h3>
-                    <p class="mb-4"><strong>Summary:</strong> Removes non-essential components from the kernel to user space. The kernel remains small (micro) and handles minimal process/memory management. Communication happens via <strong>message passing</strong>.</p>
+                    <p class="mb-4">
+                        <strong>Summary:</strong> The microkernel structure moves <strong>non-essential components</strong> (like file systems and device drivers) from the kernel into user space. This results in a small, efficient kernel that only provides <strong>basic communication, memory management, and CPU scheduling</strong>. Communication between user modules and the microkernel relies entirely on <strong>message passing</strong>, which offers greater system security and flexibility but can sometimes incur a performance penalty due to increased context switching.
+                    </p>
                     <div class="mermaid">
                         graph TD
                             subgraph UserMode ["User Mode"]
@@ -237,8 +255,8 @@
                     </div>
                 </div>
             </section>
-
         </main>
+
         <footer class="bg-gray-800 text-white text-center p-4 mt-6">
             <p>&copy; 2025 Operating System Concepts</p>
         </footer>
